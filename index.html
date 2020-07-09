@@ -1,0 +1,42 @@
+<!doctype html>
+<title>Extract an RSS url from iTunes podcast directory</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+  @media (min-width: 601px) {
+    body {
+      max-width: 700px;
+      margin: 8px auto;
+    }
+  }
+  img { max-width: 100%; }
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  #status, #podcast {
+    margin: 10px 0;
+  }
+  td {
+    vertical-align: top;
+    word-break: break-word;
+  }
+</style>
+
+<form>
+  <fieldset>
+    <div style="display: flex">
+      <input id="itunes__url" type="search"
+             placeholder="iTunes podcast URL, like, https://podcasts.apple.com/us/podcast/car-talk/id253191823"
+             required
+             style="margin-right: 5px; width: 100%">
+      <input type="submit">
+    </div>
+  </fieldset>
+</form>
+
+<div id="status"></div>
+<div id="podcast"></div>
+
+<script src="node_modules/fetch-jsonp/build/fetch-jsonp.js"></script>
+<script src="main.js"></script>
