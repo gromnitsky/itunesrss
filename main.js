@@ -8,7 +8,7 @@ function main() {
     form.onsubmit = request_rss
 
     let url = new URL(window.location.href)
-    if (url.searchParams.get('debug')) jsonp = fetchJsonp_mock
+    if (url.searchParams.get('debug') === '1') jsonp = fetchJsonp_mock
     let q = url.searchParams.get('q')
     if (q) {
         form.itunes__url.value = q
@@ -34,7 +34,7 @@ async function podcast_get(url) {
     let id = itunes_id(url); if (!id) throw new Error('invalid url')
 
     podcast_render()
-    status('Contacting iTunes...')
+    status('Reaching Apple cloud...')
     return jsonp(`https://itunes.apple.com/lookup?id=${id}`, {timeout: 10000})
         .then( r => r.json())
         .then( r => {           // validate the result
@@ -63,7 +63,7 @@ function podcast_render(json) {
     console.log(json)
     let d = json.results[0]
     div.innerHTML = `<table style="width: 100%">
-<tr><td style="min-width: 4rem">RSS</td><td>
+<tr><td style="min-width: 4rem"><b>RSS</b></td><td>
   <a href="${e(d.feedUrl)}" target="_blank"><code>${e(d.feedUrl)}</code></a> or
   <a href="https://serene-river-17732.herokuapp.com/?url=${encodeURIComponent(d.feedUrl)}" target="_blank">preview</a>
 </td></tr>
