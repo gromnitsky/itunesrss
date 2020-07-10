@@ -24,24 +24,22 @@ function request_rss(evt) {
     url.searchParams.set('q', this.itunes__url.value)
     window.history.replaceState(null, null, url.toString())
 
-    podcast_get(this.itunes__url.value).then(podcast_render).catch( (e) => {
-        status(e)
-        podcast_render()
-    })
+    this.itunes__fieldset.disable = true
+    podcast_render()
+    status('Reaching Apple cloud...')
+    podcast_get(this.itunes__url.value).then(podcast_render).then(status)
+        .catch(status).finally( () => this.itunes__fieldset.disable = false)
 }
 
 async function podcast_get(url) {
     let id = itunes_id(url); if (!id) throw new Error('invalid url')
-
-    podcast_render()
-    status('Reaching Apple cloud...')
     return jsonp(`https://itunes.apple.com/lookup?id=${id}`, {timeout: 10000})
         .then( r => r.json())
         .then( r => {           // validate the result
             if (r && r.results && !r.results.length)
                 throw new Error('invalid id')
             return r
-        }).finally( () => status())
+        })
 }
 
 function itunes_id(url) {
