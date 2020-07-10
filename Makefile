@@ -10,6 +10,9 @@ $(out)/%: %; $(copy)
 
 all: $(vendor.dest) $(static.dest)
 
+upload: all
+	rsync -avPL --delete -e ssh $(out)/ gromnitsky@web.sourceforge.net:/home/user-web/gromnitsky/htdocs/js/itunesrss/
+
 define copy
 @mkdir -p $(dir $@)
 cp $< $@
