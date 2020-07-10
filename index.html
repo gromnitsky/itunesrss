@@ -2,6 +2,12 @@
 <title>Extract an RSS url from iTunes podcast directory</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style type="text/css">
+  html { height: 100%; }
+  body {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 16px);
+  }
   @media (min-width: 601px) {
     body {
       max-width: 700px;
@@ -21,22 +27,38 @@
     vertical-align: top;
     word-break: break-word;
   }
+  footer {
+    margin-top: 1em;
+    border-top: 1px solid gray;
+  }
 </style>
 
-<form>
-  <fieldset>
-    <div style="display: flex">
-      <input id="itunes__url" type="search"
-             placeholder="iTunes podcast URL, like, https://podcasts.apple.com/us/podcast/car-talk/id253191823"
-             required
-             style="margin-right: 5px; width: 100%">
-      <input type="submit">
-    </div>
-  </fieldset>
-</form>
+<main style="flex-grow: 1">
+  <form>
+    <fieldset>
+      <div style="display: flex">
+        <input id="itunes__url" type="search"
+               placeholder="iTunes podcast URL, like, https://podcasts.apple.com/us/podcast/car-talk/id253191823"
+               required
+               style="margin-right: 5px; width: 100%">
+        <input type="submit">
+      </div>
+    </fieldset>
+  </form>
 
-<div id="status"></div>
-<div id="podcast"></div>
+  <div id="status"></div>
+  <div id="podcast"></div>
+</main>
+
+<footer>
+  <p>
+    <a href='https://github.com/gromnitsky/itunesrss'>Github</a>
+  </p>
+  <p>
+    Apple and iTunes Store are trademarks of Apple Inc., registered in
+    the U.S. and other countries.
+  </p>
+</footer>
 
 <script src="node_modules/fetch-jsonp/build/fetch-jsonp.js"></script>
 <script src="main.js"></script>
