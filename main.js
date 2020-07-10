@@ -12,7 +12,7 @@ function main() {
     let q = url.searchParams.get('q')
     if (q) {
         form.itunes__url.value = q
-        form.requestSubmit()
+        form.querySelector('input[type=submit]').click()
     }
 }
 
