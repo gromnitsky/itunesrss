@@ -34,10 +34,11 @@ function request_rss(evt) {
 async function podcast_get(url) {
     let id = itunes_id(url); if (!id) throw new Error('invalid url')
     return jsonp(`https://itunes.apple.com/lookup?id=${id}`, {timeout: 10000})
+        .catch( _ => { throw new Error('Apple refused to communicate') })
         .then( r => r.json())
         .then( r => {           // validate the result
             if (r && r.results && !r.results.length)
-                throw new Error('invalid id')
+                throw new Error('invalid podcast id')
             return r
         })
 }
@@ -49,7 +50,8 @@ function itunes_id(url) {
     } catch (_) {
         return null
     }
-    if (u.host !== 'podcasts.apple.com') return null
+    if ( !(u.host === 'podcasts.apple.com' || u.host === 'itunes.apple.com'))
+        return null
     let m = u.pathname.match(/id([0-9]+)$/)
     return m ? m[1] : null
 }
@@ -78,17 +80,9 @@ ${e(d.country)}
 
 function status(e) { document.querySelector('#status').innerText = e || ''; }
 
-function e(s) {
-    if (s == null) return ''
-    return s.toString().replace(/[<>&'"]/g, ch => {
-        switch (ch) {
-        case '<': return '&lt;'
-        case '>': return '&gt;'
-        case '&': return '&amp;'
-        case '\'': return '&apos;'
-        case '"': return '&quot;'
-        }
-    })
+function e(str) {
+    let map = {'&': 'amp', '<': 'lt', '>': 'gt', '"': 'quot', "'": 'apos'}
+    return String(str == null ? '' : str).replace(/[&<>"']/g, s=>`&${map[s]};`)
 }
 
 // curl 'https://itunes.apple.com/lookup?id=253191823' | json | xsel
