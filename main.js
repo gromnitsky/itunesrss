@@ -65,7 +65,7 @@ function podcast_render(json) {
     div.innerHTML = `<table style="width: 100%">
 <tr><td style="min-width: 4rem"><b>RSS</b></td><td>
   <a href="${e(d.feedUrl)}" target="_blank"><code>${e(d.feedUrl)}</code></a> or
-  <a href="https://serene-river-17732.herokuapp.com/?url=${encodeURIComponent(d.feedUrl)}" target="_blank">preview</a>
+  <a href="https://grepfeed.sigwait.tk/?url=${encodeURIComponent(d.feedUrl)}" target="_blank">preview</a>
 </td></tr>
 <tr><td>Desc</td><td>
 <img src='${e(d.artworkUrl100)}' style="float: right">
